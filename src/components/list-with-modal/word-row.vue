@@ -7,20 +7,23 @@
       <span>{{ word.word }}</span>
     </div>
     <div class="trend" id="trend-id">
-      {{ word.trend }}
+      <sparkline :width="270" :height="70" :chartData="word.trend"></sparkline>
     </div>
     <div class="size">
-      {{ word.size }}
+      <sparkline :width="230" :height="70" :chartData="word.size"></sparkline>
     </div>
   </div>
 </template>
 
 <script>
-// import * as d3 from 'd3'
+import Sparkline from '../charts/spark-line'
 
 export default {
   name: 'WordRow',
   props: ['word'],
+  components: {
+    Sparkline
+  },
   methods: {
     showModal (word) {
       this.$store.commit('showModal')
@@ -28,35 +31,6 @@ export default {
     }
   }
 }
-
-// var width = 100
-// var height = 25
-// var x = d3.scale.linear().range([0, width])
-// var y = d3.scale.linear().range([height, 0])
-// var parseDate = d3.time.format('%b %d, %Y').parse
-// var line = d3.svg.line()
-//   .x(function (d) { return x(d.date) })
-//   .y(function (d) { return y(d.close) })
-
-// function sparkline (elemId, data) {
-//   data.forEach(function (d) {
-//     d.date = parseDate(d.Date)
-//     d.close = +d.Close
-//   })
-//   x.domain(d3.extent(data, function (d) { return d.date }))
-//   y.domain(d3.extent(data, function (d) { return d.close }))
-
-//   d3.select(elemId)
-//     .append('svg')
-//     .attr('width', width)
-//     .attr('height', height)
-//     .append('path')
-//     .datum(data)
-//     .attr('class', 'sparkline')
-//     .attr('d', line)
-// }
-
-// sparkline('trend-id', this.$store.state.words)
 </script>
 
 <style scoped lang="scss">
@@ -65,7 +39,7 @@ export default {
   height: 80px;
   user-select: none;
   cursor: pointer;
-  transition: 0.3s all ease;
+  transition: 0.2s all ease;
   .freshness {
     display: flex;
     width: 100px;
@@ -89,13 +63,17 @@ export default {
   }
   .trend {
     width: 300px;
+    display: flex;
+    align-items: center;
   }
   .size {
     width: 250px;
+    display: flex;
+    align-items: center;
   }
   &:hover {
-    transform: scale(1.01);
-    border-radius: 8px;
+    transform: scaleX(1.01);
+    border-radius: 7px;
   }
 }
 </style>

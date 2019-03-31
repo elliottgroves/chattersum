@@ -6,16 +6,16 @@
       <div class="trend">Trend (24h)</div>
       <div class="size">Size (24h)</div>
     </div>
-    <WordRow v-for="(word, index) in this.$store.state.words" :word="word" :class="{even: index % 2, odd: !(index % 2)}" :key="index"></WordRow>
+    <ExpandableWordRow v-for="(word, index) in this.$store.state.words" :word="word" :class="{even: index % 2, odd: !(index % 2)}" :key="index"></ExpandableWordRow>
   </div>
 </template>
 
 <script>
-import WordRow from './WordRow'
+import ExpandableWordRow from './expandable-word-row'
 export default {
-  name: 'WordList',
+  name: 'expandable-word-list',
   components: {
-    WordRow
+    ExpandableWordRow
   }
 }
 </script>
@@ -25,6 +25,7 @@ export default {
   width: 1000px;
   margin: 30px auto 0 auto;
   box-shadow: 0px 6px 8px 4px #aaa;
+  margin-bottom: 70px;
   .header-row {
     display: flex;
   }

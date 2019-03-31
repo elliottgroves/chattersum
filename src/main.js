@@ -3,12 +3,13 @@ import Vuex from 'vuex'
 import axios from 'axios'
 import router from './router'
 import App from './App'
-import d3 from 'd3'
-// let d3 = 'egg'
+import VueApexCharts from 'vue-apexcharts'
 
 Vue.config.productionTip = false
 
 Vue.use(Vuex)
+Vue.use(VueApexCharts)
+Vue.component('apexchart', VueApexCharts)
 
 const store = new Vuex.Store({
   state: {
@@ -19,7 +20,7 @@ const store = new Vuex.Store({
   actions: {
     loadWords ({ commit }) {
       axios
-        .get('http://localhost:4000/words')
+        .get('http://localhost:3000/words')
         .then(response => {
           commit('setWords', response.data)
         })
@@ -59,5 +60,3 @@ new Vue({ // eslint-disable-line no-new
     store.dispatch('loadWords')
   }
 })
-
-Object.defineProperty(Vue.prototype, '$d3', { value: d3 })
