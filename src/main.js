@@ -18,7 +18,7 @@ const store = new Vuex.Store({
     words: []
   },
   actions: {
-    loadWords ({ commit }) {
+    loadWords({ commit }) {
       axios
         .get('http://localhost:3000/words')
         .then(response => {
@@ -27,16 +27,16 @@ const store = new Vuex.Store({
     }
   },
   mutations: {
-    showModal (state) {
+    showModal(state) {
       state.modalShown = true
     },
-    hideModal (state) {
+    hideModal(state) {
       state.modalShown = false
     },
-    setActiveWord (state, word) {
+    setActiveWord(state, word) {
       state.activeWord = word
     },
-    setWords (state, words) {
+    setWords(state, words) {
       state.words = words
     }
   }

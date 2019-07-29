@@ -6,7 +6,7 @@
     <div class="word">
       <span>{{ word.word }}</span>
     </div>
-    <div class="trend" id="trend-id">
+    <div class="trend">
       <sparkline :width="270" :height="70" :chartData="word.trend"></sparkline>
     </div>
     <div class="size">

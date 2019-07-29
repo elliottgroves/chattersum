@@ -1,5 +1,5 @@
 <template>
-  <div class="word-row" @click="toggle()" :class="{ 'expanded': expanded }">
+  <div class="word-row" @click="toggle()" :class="[expandedClass, parity]">
     <div class="header">
       <div class="freshness">
         <div class="freshness-indicator"></div>
@@ -8,7 +8,7 @@
         <span>{{ word.word }}</span>
       </div>
       <transition name="expand-info">
-        <div v-if="!expanded"class="trend" id="trend-id">
+        <div v-if="!expanded" class="trend" id="trend-id">
           <sparkline :width="270" :height="70" :chartData="word.trend"></sparkline>
         </div>
       </transition>
@@ -18,14 +18,17 @@
         </div>
       </transition>
     </div>
-    <div class="body" :class="{ 'expanded': expanded }">
-      <div v-if="expanded" class="column">
+    <div class="body" :class="expandedClass">
+      <transition name="mask-transition" v-if="open">
+        <div class="mask"></div>
+      </transition>
+      <div v-if="open && expanded" class="column">
         <line-chart :width="350" :height="200" :chartData="word.trend"></line-chart>
         <bullet value="24" label="now"></bullet>
         <bullet value="53" label="max"></bullet>
         <bullet value="+7" label="last hour"></bullet>
       </div>
-      <div v-if="expanded" class="column">
+      <div v-if="open && expanded" class="column">
         <div>Peaked 3 hours ago</div>
         <div class="text-faded text-small">2019-3-21 15:00 ET</div>
         <div class="divider"></div>
@@ -56,16 +59,34 @@ import Bullet from '../charts/bullet'
 
 export default {
   name: 'expandable-word-row',
-  props: ['word'],
+  props: ['word', 'parity'],
   data: () => ({
-    expanded: false
+    expanded: false,
+    open: false
   }),
   components: {
     Sparkline, LineChart, Bullet
   },
+  computed: {
+    expandedClass() {
+      return this.expanded ? 'expanded' : ''
+    }
+  },
   methods: {
     toggle() {
-      this.expanded = !this.expanded;
+      if(!this.expanded) {
+        this.toggleExpanded()
+        setTimeout(this.toggleOpen, 300)
+      } else {
+        this.toggleOpen()
+        setTimeout(this.toggleExpanded, 300)
+      }
+    },
+    toggleOpen() {
+      this.open = !this.open
+    },
+    toggleExpanded() {
+      this.expanded = !this.expanded
     }
   }
 }
@@ -79,7 +100,6 @@ export default {
   .header {
     display: flex;
     height: 80px;
-    z-index: 2;
     .freshness {
       display: flex;
       width: 100px;
@@ -114,21 +134,27 @@ export default {
   }
   .body {
     z-index: 0;
-    * {
-      transition: opacity 0.6 ease;
-      opacity: 0;
-    }
+    position: relative;
     height: 0;
     flex-grow: 1;
     display: flex;
     flex-flow: row;
-    transition: height 0.6s ease;
+    transition: height 0.3s cubic-bezier(0,.4,1,1);
     &.expanded {
       height: 400px;
       padding-bottom: 30px;
       * {
         opacity: 1;
       }
+    }
+    .mask {
+      animation: mask;
+      animation-duration: 0.3s;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 12;
     }
     .column {
       width: 50%;
@@ -148,7 +174,7 @@ export default {
         }
         .info-text {
           width: 60%;
-          padding-left: 10px;
+          padding-left: 16px;
           display: flex;
           align-items: center;
           font-size: 0.5em;
@@ -169,6 +195,18 @@ export default {
   &:hover {
     transform: scaleX(1.01);
     border-radius: 7px;
+  }
+  &.odd {
+    background-color: #ddd;
+    .mask {
+      background-color: #ddd;
+    }
+  }
+  &.even {
+    background-color: #ccc;
+    .mask {
+      background-color: #ccc;
+    }
   }
 }
 </style>

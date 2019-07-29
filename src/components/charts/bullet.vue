@@ -31,14 +31,14 @@ export default {
   flex-flow: row;
   .value {
     font-size: 1.2em;
-    width: 20%;
+    width: 22%;
     text-align: right;
   }
   .label {
     color: #888;
     margin: 0 4px;
     font-size: 0.65em;
-    width: 20%;
+    width: 18%;
     text-align: center;
   }
   .bullet-line {

@@ -20,7 +20,7 @@ export default {
     }
   },
   computed: {
-    chartOptions () {
+    chartOptions() {
       return {
         chart: {
           sparkline: {
@@ -37,11 +37,9 @@ export default {
         }
       }
     },
-    series () {
+    series() {
       return [{name: 'Trend', data: this.chartData}]
     }
   }
 }
 </script>
-
-<style lang="scss" scoped></style>

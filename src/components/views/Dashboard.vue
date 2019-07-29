@@ -1,7 +1,7 @@
 <template>
  <div class="dashboard">
    <NavMenu></NavMenu>
-   <WordList></WordList>
+   <!-- <WordList></WordList> -->
    <expandable-word-list></expandable-word-list>
  </div>
 </template>

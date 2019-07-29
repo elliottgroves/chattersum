@@ -6,7 +6,7 @@
       <div class="trend">Trend (24h)</div>
       <div class="size">Size (24h)</div>
     </div>
-    <ExpandableWordRow v-for="(word, index) in this.$store.state.words" :word="word" :class="{even: index % 2, odd: !(index % 2)}" :key="index"></ExpandableWordRow>
+    <ExpandableWordRow v-for="(word, index) in this.$store.state.words" :word="word" :parity="parity(index)" :key="index"></ExpandableWordRow>
   </div>
 </template>
 
@@ -16,6 +16,11 @@ export default {
   name: 'expandable-word-list',
   components: {
     ExpandableWordRow
+  },
+  methods: {
+    parity(index) {
+      return index % 2 ? 'even' : 'odd'
+    }
   }
 }
 </script>
@@ -52,13 +57,6 @@ export default {
   }
   .size {
     width: 250px;
-  }
-
-  .odd {
-    background-color: #ddd;
-  }
-  .even {
-    background-color: #ccc;
   }
 }
 </style>

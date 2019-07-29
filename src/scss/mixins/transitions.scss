@@ -6,7 +6,23 @@
   opacity: 0;
 }
 
+.mask-transition-enter-active {
+  .mask {
+    transition: all 0.3s ease;
+  }
+}
 
+.mask-transition-enter {
+  .mask {
+    background-color: #ddd;
+  }
+}
+
+.mask-transition-enter-to {
+  .mask {
+    background-color: #000;
+  }
+}
 
 .modal-enter {
   opacity: 0;

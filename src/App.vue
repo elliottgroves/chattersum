@@ -15,12 +15,12 @@ export default {
     Modal
   },
   computed: {
-    activeWord () {
+    activeWord() {
       return this.$store.state.activeWord
     }
   },
   methods: {
-    hideModal () {
+    hideModal() {
       this.$root.hideModal()
     }
   }

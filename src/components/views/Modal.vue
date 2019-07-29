@@ -64,10 +64,10 @@ export default {
     Bullet
   },
   computed: {
-    activeWord () {
+    activeWord() {
       return this.$store.state.activeWord
     },
-    modalShown () {
+    modalShown() {
       return this.$store.state.modalShown
     }
   }
